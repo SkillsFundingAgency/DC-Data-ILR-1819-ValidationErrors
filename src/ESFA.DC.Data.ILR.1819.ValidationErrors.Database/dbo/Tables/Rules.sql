@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[ValidationErrors]
+﻿CREATE TABLE [dbo].[Rules]
 (
 	[Rulename] NVARCHAR(50) NOT NULL PRIMARY KEY, 
     [Severity] NVARCHAR NULL, 
