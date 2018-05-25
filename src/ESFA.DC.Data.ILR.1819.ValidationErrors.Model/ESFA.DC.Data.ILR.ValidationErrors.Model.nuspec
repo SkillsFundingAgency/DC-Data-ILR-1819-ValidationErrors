@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ESFA.DC.Data.ILR.1819.ValidationErrors.Model</id>
+    <version>0.1.0</version>
+    <authors>DC</authors>
+    <owners>ESFA</owners>
+    <licenseUrl>https://github.com/SkillsFundingAgency/DC-Data-ILR-1819-ValidationErrors/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SkillsFundingAgency/DC-Data-ILR-1819-ValidationErrors</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ILR 1819 Validation Errors Entity Framework Model Project.</description>
+    <copyright>Copyright 2018</copyright>
+    <tags>ILR Validation Errors Data Database Model</tags>
+  </metadata>
+</package>
