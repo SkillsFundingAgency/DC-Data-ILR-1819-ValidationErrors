@@ -1,4 +1,4 @@
-﻿namespace ESFA.DC.Data.ILR._1819.ValdationErrors.Model
+﻿namespace ESFA.DC.Data.ILR.ValidationErrors.Model
 {
     public partial class ValidationErrors
     {

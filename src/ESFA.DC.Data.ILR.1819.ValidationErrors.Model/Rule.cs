@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ESFA.DC.Data.ILR._1819.ValdationErrors.Model
+namespace ESFA.DC.Data.ILR.ValidationErrors.Model
 {
     using System;
     using System.Collections.Generic;
