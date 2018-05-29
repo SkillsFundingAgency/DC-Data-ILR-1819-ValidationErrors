@@ -59,11 +59,16 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="zzDeploymentProfiles" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rules.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ESFA.DC.Data.ILR.ValidationErrors.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="zzDeploymentProfiles\Release.publish.xml" />
+    <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
   </ItemGroup>
 </Project>
