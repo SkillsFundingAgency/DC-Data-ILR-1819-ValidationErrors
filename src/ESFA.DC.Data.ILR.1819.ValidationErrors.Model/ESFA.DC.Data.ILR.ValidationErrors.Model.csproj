@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationErrors.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ValidationErrorsConstructor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ValidationErrors.edmx">
