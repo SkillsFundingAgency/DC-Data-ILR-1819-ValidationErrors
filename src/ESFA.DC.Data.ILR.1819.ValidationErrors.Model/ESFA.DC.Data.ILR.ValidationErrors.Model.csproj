@@ -85,16 +85,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ValidationErrors.Context.tt">
+    <None Include="ValidationErrors.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ValidationErrors.Context.cs</LastGenOutput>
       <DependentUpon>ValidationErrors.edmx</DependentUpon>
-    </Content>
-    <Content Include="ValidationErrors.tt">
+    </None>
+    <None Include="ValidationErrors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ValidationErrors.edmx</DependentUpon>
       <LastGenOutput>ValidationErrors.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
