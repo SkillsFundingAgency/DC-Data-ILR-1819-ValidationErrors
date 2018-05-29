@@ -12,8 +12,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>ESFA.DC.Data.ILR.1819.ValidationErrors.Database</RootNamespace>
-    <AssemblyName>ESFA.DC.Data.ILR.1819.ValidationErrors.Database</AssemblyName>
+    <RootNamespace>ESFA.DC.Data.ILR.ValidationErrors.Database</RootNamespace>
+    <AssemblyName>ESFA.DC.Data.ILR.ValidationErrors.Database</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
