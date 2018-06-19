@@ -7,8 +7,8 @@
     <ProjectGuid>{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESFA.DC.Data.ILR._1819.ValdationErrors.Model</RootNamespace>
-    <AssemblyName>ESFA.DC.Data.ILR.1819.ValdationErrors.Model</AssemblyName>
+    <RootNamespace>ESFA.DC.Data.ILR.ValidationErrors.Model</RootNamespace>
+    <AssemblyName>ESFA.DC.Data.ILR.ValidationErrors.Model</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -69,6 +69,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationErrors.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ValidationErrorsConstructor.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ValidationErrors.edmx">

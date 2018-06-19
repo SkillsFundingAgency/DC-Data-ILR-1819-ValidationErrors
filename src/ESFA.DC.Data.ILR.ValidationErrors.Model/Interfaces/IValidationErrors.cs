@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace ESFA.DC.Data.ILR._1819.ValdationErrors.Model.Interfaces
+namespace ESFA.DC.Data.ILR.ValidationErrors.Model.Interfaces
 {
     public interface IValidationErrors
     {

@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ESFA.DC.Data.ILR._1819.ValdationErrors.Model
+namespace ESFA.DC.Data.ILR.ValidationErrors.Model
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using ESFA.DC.Data.ILR._1819.ValdationErrors.Model.Interfaces;
+    using ESFA.DC.Data.ILR.ValidationErrors.Model.Interfaces;
     
     public partial class ValidationErrors : DbContext, IValidationErrors
     {

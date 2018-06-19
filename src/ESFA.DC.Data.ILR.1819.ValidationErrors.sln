@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2018
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ESFA.DC.Data.ILR.ValidationErrors.Database", "ESFA.DC.Data.ILR.1819.ValidationErrors.Database\ESFA.DC.Data.ILR.ValidationErrors.Database.sqlproj", "{198FB870-9755-4737-B4A9-FEEE5D94565C}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ESFA.DC.Data.ILR.ValidationErrors.Database", "ESFA.DC.Data.ILR.ValidationErrors.Database\ESFA.DC.Data.ILR.ValidationErrors.Database.sqlproj", "{198FB870-9755-4737-B4A9-FEEE5D94565C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.Data.ILR.ValidationErrors.Model", "ESFA.DC.Data.ILR.1819.ValidationErrors.Model\ESFA.DC.Data.ILR.ValidationErrors.Model.csproj", "{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.Data.ILR.ValidationErrors.Model", "ESFA.DC.Data.ILR.ValidationErrors.Model\ESFA.DC.Data.ILR.ValidationErrors.Model.csproj", "{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}"
 EndProject
 Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS", "ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS\ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS.dtproj", "{6EE64F18-2FAE-416A-9079-451F0E4BACCB}"
 EndProject
