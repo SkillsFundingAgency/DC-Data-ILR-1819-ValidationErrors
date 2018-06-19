@@ -12,4 +12,12 @@
     <DoNotDropLogins>True</DoNotDropLogins>
     <DoNotDropRoleMembership>True</DoNotDropRoleMembership>
   </PropertyGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="ILR1819ValidationErrorsROUsrPwd">
+      <Value>__ILR1819ValidationErrorsROUsrPwd__</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ILR1819ValidationErrorsRWUsrPwd">
+      <Value>__ILR1819ValidationErrorsRWUsrPwd__</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>

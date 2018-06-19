@@ -12,4 +12,12 @@
     <DoNotDropLogins>True</DoNotDropLogins>
     <DoNotDropRoleMembership>True</DoNotDropRoleMembership>
   </PropertyGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="ILR1819ValidationErrorsROUsrPwd">
+      <Value>NotUsedLocally!</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ILR1819ValidationErrorsRWUsrPwd">
+      <Value>NotUsedLocally!!</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>
