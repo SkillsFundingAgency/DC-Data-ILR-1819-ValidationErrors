@@ -61,9 +61,11 @@
     <Folder Include="dbo\Tables" />
     <Folder Include="zzDeploymentProfiles" />
     <Folder Include="Security" />
+    <Folder Include="dbo\Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rules.sql" />
+    <Build Include="dbo\Views\DisplayDeploymentProperties_VW.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
