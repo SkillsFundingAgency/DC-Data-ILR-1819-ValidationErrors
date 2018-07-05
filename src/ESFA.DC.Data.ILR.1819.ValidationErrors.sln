@@ -7,8 +7,6 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ESFA.DC.Data.ILR.Validation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.Data.ILR.ValidationErrors.Model", "ESFA.DC.Data.ILR.ValidationErrors.Model\ESFA.DC.Data.ILR.ValidationErrors.Model.csproj", "{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}"
 EndProject
-Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS", "ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS\ESFA.DC.Data.ILR.1819.ValidationErrors.SSIS.dtproj", "{6EE64F18-2FAE-416A-9079-451F0E4BACCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,12 +29,6 @@ Global
 		{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{155258A2-E5D6-4A88-872D-6B0FBD40F2AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EE64F18-2FAE-416A-9079-451F0E4BACCB}.Debug|Any CPU.ActiveCfg = Development
-		{6EE64F18-2FAE-416A-9079-451F0E4BACCB}.Debug|Any CPU.Build.0 = Development
-		{6EE64F18-2FAE-416A-9079-451F0E4BACCB}.Development|Any CPU.ActiveCfg = Development
-		{6EE64F18-2FAE-416A-9079-451F0E4BACCB}.Development|Any CPU.Build.0 = Development
-		{6EE64F18-2FAE-416A-9079-451F0E4BACCB}.Release|Any CPU.ActiveCfg = Development
-		{6EE64F18-2FAE-416A-9079-451F0E4BACCB}.Release|Any CPU.Build.0 = Development
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
