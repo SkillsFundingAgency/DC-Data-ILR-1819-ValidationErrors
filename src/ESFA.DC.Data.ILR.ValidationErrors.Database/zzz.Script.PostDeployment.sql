@@ -35,6 +35,19 @@ IF NOT EXISTS (SELECT name, value FROM fn_listextendedproperty('DeploymentDateti
 	EXEC sp_addextendedproperty @name = N'DeploymentDatetime', @value = @DeploymentTime;  
 ELSE
 	EXEC sp_updateextendedproperty @name = N'DeploymentDatetime', @value = @DeploymentTime;  
+GO
+
+IF EXISTS (SELECT * FROM [sys].[objects] WHERE [type] = 'V' AND Name = 'DisplayDeploymentProperties_VW')
+BEGIN 
+	DROP VIEW [dbo].[DisplayDeploymentProperties_VW];
+END
+
+GO
+EXEC ('CREATE VIEW [dbo].[DisplayDeploymentProperties_VW]
+AS
+	SELECT name, value 
+	FROM fn_listextendedproperty(default, default, default, default, default, default, default);  
+	');
 
 GO
 
