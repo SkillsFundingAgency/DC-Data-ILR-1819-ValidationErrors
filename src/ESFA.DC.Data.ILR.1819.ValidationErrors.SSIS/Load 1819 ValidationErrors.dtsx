@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Load 1819 ValidationErrors"
   DTS:PackageType="5"
-  DTS:VersionBuild="3"
-  DTS:VersionGUID="{7AE9FF06-A63A-400F-B11E-766E8AD211C4}">
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{7FCD9A30-98E5-48DB-87BC-0F703B6B0C5C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -25,7 +25,7 @@
         DTS:Name="ConnectionString">@[$Project::SourceConnectionManager_ConnectionString]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=.;Initial Catalog=CLARS_DRAFT;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=.;Initial Catalog=Validation_Messages_Reference_Data;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -37,7 +37,7 @@
         DTS:Name="ConnectionString">@[$Project::TargetConnectionManager_ConnectionString]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=.;Initial Catalog=LARS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=.;Initial Catalog=ILR1819ValidationErrorMessages;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -63,13 +63,13 @@
   </DTS:Variables>
   <DTS:Executables>
     <DTS:Executable
-      DTS:refId="Package\SEQ - Stage - ErrorMessage"
+      DTS:refId="Package\SEQ - Stage - Rules"
       DTS:CreationName="STOCK:SEQUENCE"
       DTS:Description="Sequence Container"
       DTS:DTSID="{5f9b7426-549d-4cf1-a168-a22e590e1b8e}"
       DTS:ExecutableType="STOCK:SEQUENCE"
       DTS:LocaleID="-1"
-      DTS:ObjectName="SEQ - Stage - ErrorMessage">
+      DTS:ObjectName="SEQ - Stage - Rules">
       <DTS:Variables>
         <DTS:Variable
           DTS:CreationName=""
@@ -78,18 +78,16 @@
           DTS:Namespace="User"
           DTS:ObjectName="Name">
           <DTS:VariableValue
-            DTS:DataType="8">ErrorMessage</DTS:VariableValue>
+            DTS:DataType="8">Rules</DTS:VariableValue>
         </DTS:Variable>
         <DTS:Variable
           DTS:CreationName=""
           DTS:DTSID="{c59a5387-4030-4510-81f6-2d24bb6b3b30}"
-          DTS:EvaluateAsExpression="True"
-          DTS:Expression="&quot;SELECT * FROM [&quot; + @[User::SourceSchema] + &quot;].[&quot; + @[User::Name] +&quot;] &quot;"
           DTS:IncludeInDebugDump="2345"
           DTS:Namespace="User"
           DTS:ObjectName="SourceObjectSelectStatement">
           <DTS:VariableValue
-            DTS:DataType="8">SELECT * FROM [dbo].[ErrorMessage] </DTS:VariableValue>
+            DTS:DataType="8">SELECT [RuleID] as [Rulename] ,[Severity] as [Severity] ,[ErrorMessage] as [Message] FROM [dbo].[ErrorMessage]</DTS:VariableValue>
         </DTS:Variable>
         <DTS:Variable
           DTS:CreationName=""
@@ -100,20 +98,20 @@
           DTS:Namespace="User"
           DTS:ObjectName="StagingObjectName">
           <DTS:VariableValue
-            DTS:DataType="8">[Staging].[ErrorMessage]</DTS:VariableValue>
+            DTS:DataType="8">[Staging].[Rules]</DTS:VariableValue>
         </DTS:Variable>
       </DTS:Variables>
       <DTS:PropertyExpression
         DTS:Name="Name">LTRIM(RTRIM( "SEQ - Stage - " + @[User::Name]))</DTS:PropertyExpression>
       <DTS:Executables>
         <DTS:Executable
-          DTS:refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage"
+          DTS:refId="Package\SEQ - Stage - Rules\DFT - Rules"
           DTS:CreationName="Microsoft.Pipeline"
           DTS:Description="Data Flow Task"
           DTS:DTSID="{3d2e3992-82f2-46d0-8e14-9df47a2523f7}"
           DTS:ExecutableType="Microsoft.Pipeline"
           DTS:LocaleID="-1"
-          DTS:ObjectName="DFT - ErrorMessage"
+          DTS:ObjectName="DFT - Rules"
           DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
           <DTS:Variables />
           <DTS:PropertyExpression
@@ -123,7 +121,7 @@
               version="1">
               <components>
                 <component
-                  refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data"
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data"
                   componentClassID="Microsoft.OLEDBSource"
                   contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
                   description="OLE DB Source"
@@ -147,7 +145,12 @@
                       dataType="System.String"
                       description="The SQL command to be executed."
                       name="SqlCommand"
-                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT [RuleID] as [Rulename]
+      ,[Severity] as [Severity]
+      ,[ErrorMessage] as [Message]
+FROM [Validation_Messages_Reference_Data].[dbo].[ErrorMessage]
+WHERE CollectionType = 'ILR1819'</property>
                     <property
                       dataType="System.String"
                       description="The variable that contains the SQL command to be executed."
@@ -164,7 +167,7 @@
                       dataType="System.Int32"
                       description="Specifies the mode used to access the database."
                       name="AccessMode"
-                      typeConverter="AccessMode">3</property>
+                      typeConverter="AccessMode">2</property>
                     <property
                       dataType="System.String"
                       description="The mappings between the parameters in the SQL command and variables."
@@ -172,7 +175,7 @@
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Connections[OleDbConnection]"
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Connections[OleDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Source Connection Manager]"
                       connectionManagerRefId="Package.ConnectionManagers[Source Connection Manager]"
                       description="The OLE DB runtime connection used to access the database."
@@ -180,179 +183,179 @@
                   </connections>
                   <outputs>
                     <output
-                      refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output]"
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output]"
                       name="OLE DB Source Output">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Created_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Created_On]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_On]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Created_On]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_On]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Created_On]"
                           name="Created_On"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Created_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Created_By]"
                           codePage="1252"
                           dataType="str"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_By]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_By]"
                           length="256"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Created_By]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Created_By]"
                           name="Created_By"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[LearnAimRef]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[LearnAimRef]"
                           codePage="1252"
                           dataType="str"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[LearnAimRef]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[LearnAimRef]"
                           length="8"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[LearnAimRef]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[LearnAimRef]"
                           name="LearnAimRef"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[AreaCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[AreaCode]"
                           codePage="1252"
                           dataType="str"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[AreaCode]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[AreaCode]"
                           length="50"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[AreaCode]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[AreaCode]"
                           name="AreaCode"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveFrom]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveFrom]"
                           dataType="dbDate"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveFrom]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveFrom]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveFrom]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveFrom]"
                           name="EffectiveFrom"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveTo]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveTo]"
                           dataType="dbDate"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveTo]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveTo]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveTo]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveTo]"
                           name="EffectiveTo"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[MaxLoanAmount]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[MaxLoanAmount]"
                           dataType="numeric"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[MaxLoanAmount]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[MaxLoanAmount]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[MaxLoanAmount]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[MaxLoanAmount]"
                           name="MaxLoanAmount"
                           precision="10"
                           scale="5"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyPercent]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyPercent]"
                           dataType="numeric"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyPercent]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyPercent]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyPercent]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyPercent]"
                           name="SubsidyPercent"
                           precision="10"
                           scale="5"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyRate]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyRate]"
                           dataType="numeric"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyRate]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyRate]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyRate]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyRate]"
                           name="SubsidyRate"
                           precision="10"
                           scale="5"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Modified_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Modified_On]"
                           dataType="dbTimeStamp"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_On]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Modified_On]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_On]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Modified_On]"
                           name="Modified_On"
                           truncationRowDisposition="FailComponent" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Modified_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Modified_By]"
                           codePage="1252"
                           dataType="str"
                           errorOrTruncationOperation="Conversion"
                           errorRowDisposition="FailComponent"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_By]"
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_By]"
                           length="256"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Modified_By]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Modified_By]"
                           name="Modified_By"
                           truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_On]"
                           dataType="dbTimeStamp"
                           name="Created_On" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Created_By]"
                           codePage="1252"
                           dataType="str"
                           length="256"
                           name="Created_By" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[LearnAimRef]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[LearnAimRef]"
                           codePage="1252"
                           dataType="str"
                           length="8"
                           name="LearnAimRef" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[AreaCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[AreaCode]"
                           codePage="1252"
                           dataType="str"
                           length="50"
                           name="AreaCode" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveFrom]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveFrom]"
                           dataType="dbDate"
                           name="EffectiveFrom" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveTo]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[EffectiveTo]"
                           dataType="dbDate"
                           name="EffectiveTo" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[MaxLoanAmount]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[MaxLoanAmount]"
                           dataType="numeric"
                           name="MaxLoanAmount"
                           precision="10"
                           scale="5" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyPercent]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyPercent]"
                           dataType="numeric"
                           name="SubsidyPercent"
                           precision="10"
                           scale="5" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyRate]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[SubsidyRate]"
                           dataType="numeric"
                           name="SubsidyRate"
                           precision="10"
                           scale="5" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_On]"
                           dataType="dbTimeStamp"
                           name="Modified_On" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].ExternalColumns[Modified_By]"
                           codePage="1252"
                           dataType="str"
                           length="256"
@@ -360,90 +363,90 @@
                       </externalMetadataColumns>
                     </output>
                     <output
-                      refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output]"
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output]"
                       isErrorOut="true"
                       name="OLE DB Source Error Output">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_On]"
                           dataType="dbTimeStamp"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_On]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_On]"
                           name="Created_On" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_By]"
                           codePage="1252"
                           dataType="str"
                           length="256"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_By]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Created_By]"
                           name="Created_By" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[LearnAimRef]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[LearnAimRef]"
                           codePage="1252"
                           dataType="str"
                           length="8"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[LearnAimRef]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[LearnAimRef]"
                           name="LearnAimRef" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[AreaCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[AreaCode]"
                           codePage="1252"
                           dataType="str"
                           length="50"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[AreaCode]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[AreaCode]"
                           name="AreaCode" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveFrom]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveFrom]"
                           dataType="dbDate"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveFrom]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveFrom]"
                           name="EffectiveFrom" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveTo]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveTo]"
                           dataType="dbDate"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveTo]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[EffectiveTo]"
                           name="EffectiveTo" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[MaxLoanAmount]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[MaxLoanAmount]"
                           dataType="numeric"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[MaxLoanAmount]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[MaxLoanAmount]"
                           name="MaxLoanAmount"
                           precision="10"
                           scale="5" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyPercent]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyPercent]"
                           dataType="numeric"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyPercent]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyPercent]"
                           name="SubsidyPercent"
                           precision="10"
                           scale="5" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyRate]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyRate]"
                           dataType="numeric"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyRate]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[SubsidyRate]"
                           name="SubsidyRate"
                           precision="10"
                           scale="5" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_On]"
                           dataType="dbTimeStamp"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_On]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_On]"
                           name="Modified_On" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_By]"
                           codePage="1252"
                           dataType="str"
                           length="256"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_By]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Error Output].Columns[Modified_By]"
                           name="Modified_By" />
                       </outputColumns>
                       <externalMetadataColumns />
@@ -451,7 +454,7 @@
                   </outputs>
                 </component>
                 <component
-                  refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data"
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data"
                   componentClassID="Microsoft.OLEDBDestination"
                   contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
                   description="OLE DB Destination"
@@ -508,7 +511,7 @@
                   </properties>
                   <connections>
                     <connection
-                      refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Connections[OleDbConnection]"
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Connections[OleDbConnection]"
                       connectionManagerID="Package.ConnectionManagers[Target Connection Manager]"
                       connectionManagerRefId="Package.ConnectionManagers[Target Connection Manager]"
                       description="The OLE DB runtime connection used to access the database."
@@ -516,151 +519,151 @@
                   </connections>
                   <inputs>
                     <input
-                      refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input]"
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input]"
                       errorOrTruncationOperation="Insert"
                       errorRowDisposition="FailComponent"
                       hasSideEffects="true"
                       name="OLE DB Destination Input">
                       <inputColumns>
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[Created_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Created_On]"
                           cachedDataType="dbTimeStamp"
                           cachedName="Created_On"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_On]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Created_On]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_On]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Created_On]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[Created_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Created_By]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="256"
                           cachedName="Created_By"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_By]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Created_By]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_By]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Created_By]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[LearnAimRef]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[LearnAimRef]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="8"
                           cachedName="LearnAimRef"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[LearnAimRef]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[LearnAimRef]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[LearnAimRef]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[LearnAimRef]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[AreaCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[AreaCode]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="50"
                           cachedName="AreaCode"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[AreaCode]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[AreaCode]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[AreaCode]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[AreaCode]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[EffectiveFrom]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[EffectiveFrom]"
                           cachedDataType="dbDate"
                           cachedName="EffectiveFrom"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveFrom]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveFrom]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveFrom]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveFrom]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[EffectiveTo]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[EffectiveTo]"
                           cachedDataType="dbDate"
                           cachedName="EffectiveTo"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveTo]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveTo]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveTo]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[EffectiveTo]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[MaxLoanAmount]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[MaxLoanAmount]"
                           cachedDataType="numeric"
                           cachedName="MaxLoanAmount"
                           cachedPrecision="10"
                           cachedScale="5"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[MaxLoanAmount]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[MaxLoanAmount]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[MaxLoanAmount]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[MaxLoanAmount]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[SubsidyPercent]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[SubsidyPercent]"
                           cachedDataType="numeric"
                           cachedName="SubsidyPercent"
                           cachedPrecision="10"
                           cachedScale="5"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyPercent]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyPercent]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyPercent]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyPercent]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[SubsidyRate]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[SubsidyRate]"
                           cachedDataType="numeric"
                           cachedName="SubsidyRate"
                           cachedPrecision="10"
                           cachedScale="5"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyRate]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyRate]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyRate]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[SubsidyRate]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[Modified_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Modified_On]"
                           cachedDataType="dbTimeStamp"
                           cachedName="Modified_On"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_On]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Modified_On]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_On]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Modified_On]" />
                         <inputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].Columns[Modified_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].Columns[Modified_By]"
                           cachedCodepage="1252"
                           cachedDataType="str"
                           cachedLength="256"
                           cachedName="Modified_By"
-                          externalMetadataColumnId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_By]"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output].Columns[Modified_By]" />
+                          externalMetadataColumnId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_By]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output].Columns[Modified_By]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_On]"
                           dataType="dbTimeStamp"
                           name="Created_On" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Created_By]"
                           codePage="1252"
                           dataType="str"
                           length="256"
                           name="Created_By" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[LearnAimRef]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[LearnAimRef]"
                           codePage="1252"
                           dataType="str"
                           length="8"
                           name="LearnAimRef" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[AreaCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[AreaCode]"
                           codePage="1252"
                           dataType="str"
                           length="50"
                           name="AreaCode" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveFrom]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveFrom]"
                           dataType="wstr"
                           length="10"
                           name="EffectiveFrom" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveTo]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[EffectiveTo]"
                           dataType="wstr"
                           length="10"
                           name="EffectiveTo" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[MaxLoanAmount]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[MaxLoanAmount]"
                           dataType="numeric"
                           name="MaxLoanAmount"
                           precision="10"
                           scale="5" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyPercent]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyPercent]"
                           dataType="numeric"
                           name="SubsidyPercent"
                           precision="10"
                           scale="5" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyRate]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[SubsidyRate]"
                           dataType="numeric"
                           name="SubsidyRate"
                           precision="10"
                           scale="5" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_On]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_On]"
                           dataType="dbTimeStamp"
                           name="Modified_On" />
                         <externalMetadataColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_By]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input].ExternalColumns[Modified_By]"
                           codePage="1252"
                           dataType="str"
                           length="256"
@@ -670,22 +673,22 @@
                   </inputs>
                   <outputs>
                     <output
-                      refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Outputs[OLE DB Destination Error Output]"
+                      refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output]"
                       exclusionGroup="1"
                       isErrorOut="true"
                       name="OLE DB Destination Error Output"
-                      synchronousInputId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input]">
+                      synchronousInputId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input]">
                       <outputColumns>
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                           dataType="i4"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
                           name="ErrorCode"
                           specialFlags="1" />
                         <outputColumn
-                          refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          refId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                           dataType="i4"
-                          lineageId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          lineageId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -696,22 +699,22 @@
               </components>
               <paths>
                 <path
-                  refId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage.Paths[OLE DB Source Output]"
-                  endId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data.Inputs[OLE DB Destination Input]"
+                  refId="Package\SEQ - Stage - Rules\DFT - Rules.Paths[OLE DB Source Output]"
+                  endId="Package\SEQ - Stage - Rules\DFT - Rules\Target Data.Inputs[OLE DB Destination Input]"
                   name="OLE DB Source Output"
-                  startId="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data.Outputs[OLE DB Source Output]" />
+                  startId="Package\SEQ - Stage - Rules\DFT - Rules\Source Data.Outputs[OLE DB Source Output]" />
               </paths>
             </pipeline>
           </DTS:ObjectData>
         </DTS:Executable>
         <DTS:Executable
-          DTS:refId="Package\SEQ - Stage - ErrorMessage\SQL - Delete from - ErrorMessage"
+          DTS:refId="Package\SEQ - Stage - Rules\SQL - Delete from - Rules"
           DTS:CreationName="Microsoft.ExecuteSQLTask"
           DTS:Description="Execute SQL Task"
           DTS:DTSID="{30e6f605-2d2c-4e33-9423-98834be96e0d}"
           DTS:ExecutableType="Microsoft.ExecuteSQLTask"
           DTS:LocaleID="-1"
-          DTS:ObjectName="SQL - Delete from - ErrorMessage"
+          DTS:ObjectName="SQL - Delete from - Rules"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
           DTS:ThreadHint="0">
           <DTS:Variables>
@@ -724,7 +727,7 @@
               DTS:Namespace="User"
               DTS:ObjectName="SqlCommand">
               <DTS:VariableValue
-                DTS:DataType="8">DELETE FROM [Staging].[ErrorMessage];</DTS:VariableValue>
+                DTS:DataType="8">DELETE FROM [Staging].[Rules];</DTS:VariableValue>
             </DTS:Variable>
           </DTS:Variables>
           <DTS:PropertyExpression
@@ -734,19 +737,19 @@
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{86E1CE56-F3B2-4A5A-ACFF-4C6DFB8BCD0A}"
-              SQLTask:SqlStatementSource="DELETE FROM [Staging].[ErrorMessage];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="DELETE FROM [Staging].[Rules];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
         <DTS:PrecedenceConstraint
-          DTS:refId="Package\SEQ - Stage - ErrorMessage.PrecedenceConstraints[Constraint]"
+          DTS:refId="Package\SEQ - Stage - Rules.PrecedenceConstraints[Constraint]"
           DTS:CreationName=""
           DTS:DTSID="{1fa8edea-66cf-4730-b1f3-60eb8a9bd395}"
-          DTS:From="Package\SEQ - Stage - ErrorMessage\SQL - Delete from - ErrorMessage"
+          DTS:From="Package\SEQ - Stage - Rules\SQL - Delete from - Rules"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
-          DTS:To="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage" />
+          DTS:To="Package\SEQ - Stage - Rules\DFT - Rules" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
   </DTS:Executables>
@@ -764,14 +767,14 @@
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="224,42"
-          Id="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules"
           TopLeft="35,74.5" />
         <NodeLayout
           Size="289,42"
-          Id="Package\SEQ - Stage - ErrorMessage\SQL - Delete from - ErrorMessage"
+          Id="Package\SEQ - Stage - Rules\SQL - Delete from - Rules"
           TopLeft="5.5,5.5" />
         <EdgeLayout
-          Id="Package\SEQ - Stage - ErrorMessage.PrecedenceConstraints[Constraint]"
+          Id="Package\SEQ - Stage - Rules.PrecedenceConstraints[Constraint]"
           TopLeft="148.5,47.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -797,26 +800,26 @@
           IsExpanded="True"
           PanelSize="300,125"
           Size="300,168"
-          Id="Package\SEQ - Stage - ErrorMessage"
-          TopLeft="516,412" />
+          Id="Package\SEQ - Stage - Rules"
+          TopLeft="411,266" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage">
+    design-time-name="Package\SEQ - Stage - Rules\DFT - Rules">
     <LayoutInfo>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="136,42"
-          Id="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Source Data"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\Source Data"
           TopLeft="355,63" />
         <NodeLayout
           Size="135,42"
-          Id="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage\Target Data"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\Target Data"
           TopLeft="361,156" />
         <EdgeLayout
-          Id="Package\SEQ - Stage - ErrorMessage\DFT - ErrorMessage.Paths[OLE DB Source Output]"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules.Paths[OLE DB Source Output]"
           TopLeft="425.75,105">
           <EdgeLayout.Curve>
             <mssgle:Curve
@@ -840,5 +843,21 @@
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ - Stage - Rules\DFT - Rules\Source Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SEQ - Stage - Rules\DFT - Rules\Target Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
