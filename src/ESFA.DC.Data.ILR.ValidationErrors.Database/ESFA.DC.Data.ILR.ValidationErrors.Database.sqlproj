@@ -63,9 +63,13 @@
     <Folder Include="dbo\Tables" />
     <Folder Include="zzDeploymentProfiles" />
     <Folder Include="Security" />
+    <Folder Include="Staging\Tables" />
+    <Folder Include="Staging" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rules.sql" />
+    <Build Include="Staging\Tables\Rules.sql" />
+    <Build Include="Security\Staging.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
