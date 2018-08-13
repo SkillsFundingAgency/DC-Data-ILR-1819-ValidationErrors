@@ -65,11 +65,14 @@
     <Folder Include="Security" />
     <Folder Include="Staging\Tables" />
     <Folder Include="Staging" />
+    <Folder Include="Staging\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rules.sql" />
     <Build Include="Staging\Tables\Rules.sql" />
     <Build Include="Security\Staging.sql" />
+    <Build Include="Staging\Stored Procedures\usp_Process.sql" />
+    <Build Include="Staging\Stored Procedures\usp_Process_Rules.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />

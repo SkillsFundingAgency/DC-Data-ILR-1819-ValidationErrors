@@ -1,11 +1,43 @@
-﻿CREATE PROCEDURE [Staging].[usp_Process]
+﻿CREATE PROCEDURE [Staging].[usp_Process_Rules]
 AS
 BEGIN
 	SET NOCOUNT ON;
 
 	BEGIN TRY
-				
-			EXEC [Staging].[usp_Process_Rules];
+		
+		MERGE INTO [dbo].[Rules] AS Target
+		USING (
+				SELECT   [Rulename]
+						,[Severity]
+						,[Message]
+				  FROM [Staging].[Rules]
+			  )
+			  AS Source 
+		    ON Target.[Rulename] = Source.[Rulename]
+			WHEN MATCHED 
+				AND EXISTS 
+					(	SELECT 
+							 Target.[Severity]
+							,Target.[Message]
+					EXCEPT 
+						SELECT 
+							 Source.[Severity]
+							,Source.[Message]
+					)
+		  THEN
+			UPDATE SET   [Severity] = Source.[Severity]
+						,[Message] = Source.[Message]
+		WHEN NOT MATCHED BY TARGET THEN
+		INSERT (     [Rulename]
+					,[Severity]
+					,[Message]
+					)
+			VALUES ( Source.[Rulename]
+					,Source.[Severity]
+					,Source.[Message]
+				  )
+		WHEN NOT MATCHED BY SOURCE THEN DELETE
+		;
 
 		RETURN 0;
 

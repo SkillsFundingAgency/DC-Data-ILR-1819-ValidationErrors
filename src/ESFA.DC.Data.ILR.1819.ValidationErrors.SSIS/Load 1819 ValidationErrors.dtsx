@@ -12,8 +12,8 @@
   DTS:ObjectName="Load 1819 ValidationErrors"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="11"
-  DTS:VersionGUID="{83FBF2B2-5EE3-4C5B-9D8E-13CC344CD28D}">
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{73CE19D6-B646-4741-9852-D5BBCC54D149}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,7 +26,7 @@
         DTS:Name="ConnectionString">@[$Project::SourceConnectionManager_ConnectionString]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=DSCI-PRD-SQL-98;Initial Catalog=Validation_Messages_Reference_Data;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=XXXXXX;Initial Catalog=Validation_Messages_Reference_Data;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -38,11 +38,7 @@
         DTS:Name="ConnectionString">@[$Project::TargetConnectionManager_ConnectionString]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Data Source=dcol-dev-sqlserver-weu.database.windows.net,1433;Initial Catalog=ILR1819ValidationErrors;Provider=SQLNCLI11.1; User Id=ILR1819ValidationErrors_RW_User;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=YYYY;Initial Catalog=Validation_Messages_Reference_Data;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -296,7 +292,7 @@ WHERE CollectionType = 'ILR1819' AND Version=10</property>
                     <property
                       dataType="System.String"
                       description="Specifies the name of the database object used to open a rowset."
-                      name="OpenRowset">[dbo].[Rules]</property>
+                      name="OpenRowset">[Staging].[Rules]</property>
                     <property
                       dataType="System.String"
                       description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -534,13 +530,13 @@ WHERE CollectionType = 'ILR1819' AND Version=10</property>
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="136,42"
-          Id="Package\SEQ - Stage - Rules\DFT - Rules\Source Data"
-          TopLeft="355,63" />
-        <NodeLayout
           Size="135,42"
           Id="Package\SEQ - Stage - Rules\DFT - Rules\Target Data"
           TopLeft="361,156" />
+        <NodeLayout
+          Size="136,42"
+          Id="Package\SEQ - Stage - Rules\DFT - Rules\Source Data"
+          TopLeft="355,63" />
         <EdgeLayout
           Id="Package\SEQ - Stage - Rules\DFT - Rules.Paths[OLE DB Source Output]"
           TopLeft="425.75,105">
