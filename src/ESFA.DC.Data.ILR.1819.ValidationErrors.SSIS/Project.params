@@ -14,9 +14,10 @@
       <SSIS:Property
         SSIS:Name="Required">1</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Sensitive">0</SSIS:Property>
+        SSIS:Name="Sensitive">1</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Value">Data Source=XXXXXX;Initial Catalog=Validation_Messages_Reference_Data;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;</SSIS:Property>
+        SSIS:Name="Value"
+        SSIS:Sensitive="1"></SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>
@@ -35,9 +36,10 @@
       <SSIS:Property
         SSIS:Name="Required">1</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Sensitive">0</SSIS:Property>
+        SSIS:Name="Sensitive">1</SSIS:Property>
       <SSIS:Property
-        SSIS:Name="Value">Data Source=YYYY;Initial Catalog=Validation_Messages_Reference_Data;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;</SSIS:Property>
+        SSIS:Name="Value"
+        SSIS:Sensitive="1"></SSIS:Property>
       <SSIS:Property
         SSIS:Name="DataType">18</SSIS:Property>
     </SSIS:Properties>
