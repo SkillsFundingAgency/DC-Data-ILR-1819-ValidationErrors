@@ -42,3 +42,7 @@ BEGIN
 -------------------------------------------------------------------------------------- 
 -- 
 END
+
+GO
+GRANT EXECUTE ON [Staging].[usp_Process] TO [ILR1819ValidationErrors_RW_User]
+GO
