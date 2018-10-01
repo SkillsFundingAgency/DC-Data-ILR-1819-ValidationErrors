@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Rules]
+(
+	[Rulename] NVARCHAR(50) NOT NULL, 
+    [Severity] NVARCHAR NULL, 
+    [Message] NVARCHAR(2000) NULL
+	CONSTRAINT [PK_dbo_LARS_Rules] PRIMARY KEY CLUSTERED ([Rulename]) WITH (FILLFACTOR = 90)
+)
