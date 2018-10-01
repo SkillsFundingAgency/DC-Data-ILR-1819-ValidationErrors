@@ -12,7 +12,7 @@ BEGIN
 						,[Message]
 				  FROM [Staging].[Rules]
 				UNION ALL 
-					SELECT   'IP_EMPTY' as [Rulename]
+					SELECT   'ZIP_EMPTY' as [Rulename]
 							,'F' as [Severity]
 							,'Zip folder must contain only one XML file' as [Message]
 				UNION ALL 
