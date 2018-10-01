@@ -7,10 +7,22 @@ BEGIN
 		
 		MERGE INTO [dbo].[Rules] AS Target
 		USING (
-				SELECT   [Rulename]
+				  SELECT   [Rulename]
 						,[Severity]
 						,[Message]
 				  FROM [Staging].[Rules]
+				UNION ALL 
+					SELECT   'IP_EMPTY' as [Rulename]
+							,'F' as [Severity]
+							,'Zip folder must contain only one XML file' as [Message]
+				UNION ALL 
+					SELECT   'ZIP_TOO_MANY_FILES' as [Rulename]
+							,'F' as [Severity]
+							,'Zip folder must contain an XML file' as [Message]
+				UNION ALL 
+					SELECT   'ZIP_CORRUPT' as [Rulename]
+							,'F' as [Severity]
+							,'Zip folder is corrupt or invalid' as [Message]
 			  )
 			  AS Source 
 		    ON Target.[Rulename] = Source.[Rulename]
