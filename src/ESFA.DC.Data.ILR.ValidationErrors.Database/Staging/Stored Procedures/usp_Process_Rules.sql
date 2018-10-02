@@ -51,6 +51,9 @@ BEGIN
 		WHEN NOT MATCHED BY SOURCE THEN DELETE
 		;
 
+		INSERT INTO [dbo].[Rules] ([Rulename], [Severity], [Message])
+		VALUES ('Schema', 'F', 'The XML is not well formed')
+		
 		RETURN 0;
 
 	END TRY
