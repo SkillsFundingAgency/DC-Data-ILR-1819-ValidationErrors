@@ -23,6 +23,10 @@ BEGIN
 					SELECT   'ZIP_CORRUPT' as [Rulename]
 							,'F' as [Severity]
 							,'Zip folder is corrupt or invalid' as [Message]
+				UNION ALL 
+					SELECT   'Schema' AS [Rulename]
+							,'F' AS [Severity]
+							,'XSD Schema failure' as [Message]
 			  )
 			  AS Source 
 		    ON Target.[Rulename] = Source.[Rulename]
