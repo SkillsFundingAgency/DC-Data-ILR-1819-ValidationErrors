@@ -26,7 +26,7 @@ BEGIN
 				UNION ALL 
 					SELECT   'Schema' AS [Rulename]
 							,'F' AS [Severity]
-							,'XSD Schema failure' as [Message]
+							,'The XML is not well formed' as [Message]
 			  )
 			  AS Source 
 		    ON Target.[Rulename] = Source.[Rulename]
@@ -55,8 +55,6 @@ BEGIN
 		WHEN NOT MATCHED BY SOURCE THEN DELETE
 		;
 
-		INSERT INTO [dbo].[Rules] ([Rulename], [Severity], [Message])
-		VALUES ('Schema', 'F', 'The XML is not well formed')
 		
 		RETURN 0;
 
