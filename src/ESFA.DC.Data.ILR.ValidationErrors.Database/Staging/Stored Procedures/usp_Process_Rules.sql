@@ -7,28 +7,25 @@ BEGIN
 		
 		MERGE INTO [dbo].[Rules] AS Target
 		USING (
-				  SELECT   [Rulename]
-						,[Severity]
-						,[Message]
-				  FROM [Staging].[Rules]
-				UNION ALL 
-					SELECT   'ZIP_EMPTY' as [Rulename]
-							,'F' as [Severity]
-							,'Zip folder must contain only one XML file' as [Message]
-				UNION ALL 
-					SELECT   'ZIP_TOO_MANY_FILES' as [Rulename]
-							,'F' as [Severity]
-							,'Zip folder must contain an XML file' as [Message]
-				UNION ALL 
-					SELECT   'ZIP_CORRUPT' as [Rulename]
-							,'F' as [Severity]
-							,'Zip folder is corrupt or invalid' as [Message]
-				UNION ALL 
-					SELECT   'Schema' AS [Rulename]
-							,'F' AS [Severity]
-							,'The XML is not well formed' as [Message]
+				SELECT [Rulename]
+					  ,[Severity]
+					  ,[Message]
+				FROM 
+				(
+				  SELECT TOP (1000) [Rulename]
+					  ,[Severity]
+					  ,[Message]
+				  FROM [Staging].[FileRules]
+				UNION 
+				  SELECT TOP (1000) R.[Rulename]
+					  ,ISNULL(MR.[Severity],R.[Severity]) as [Severity]
+					  ,ISNULL(MR.[Message],R.[Message]) as [Message]	  
+				  FROM [Staging].[Rules] R
+				  LEFT JOIN [Staging].[ModifiedRules] MR
+				  ON MR.[Rulename] = R.[Rulename]
+				) as RecordSetToProcess
 			  )
-			  AS Source 
+			  AS Source ([Rulename],[Severity],[Message])
 		    ON Target.[Rulename] = Source.[Rulename]
 			WHEN MATCHED 
 				AND EXISTS 

@@ -10,6 +10,9 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+RAISERROR('		   Ref Data',10,1) WITH NOWAIT;
+	:r .\zReferenceData\Validation.File.Rules.sql
+	:r .\zReferenceData\Validation.Modified.Rules.sql
 
 GO
 RAISERROR('		   Extended Property',10,1) WITH NOWAIT;

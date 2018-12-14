@@ -67,6 +67,7 @@
     <Folder Include="Staging" />
     <Folder Include="Staging\Stored Procedures" />
     <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="zReferenceData" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Rules.sql" />
@@ -79,13 +80,15 @@
     <Build Include="Security\Role_DataViewer.sql" />
     <Build Include="Security\User_DsciUser.sql" />
     <Build Include="Staging\Tables\ModifiedRules.sql" />
-    <Build Include="Staging\Stored Procedures\usp_Process_Modified_Rules.sql" />
+    <Build Include="Staging\Tables\FileRules.sql" />
+    <None Include="zReferenceData\Validation.Modified.Rules.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="Security\ILR1819ValidationErrors_RO_User.sql" />
     <Build Include="Security\ILR1819ValidationErrors_RW_User.sql" />
+    <None Include="zReferenceData\Validation.File.Rules.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="BUILD_BRANCHNAME">
