@@ -12,10 +12,21 @@ BEGIN
 					  ,[Message]
 				FROM 
 				(
+				  -- New File Rules
 				  SELECT TOP (1000) [Rulename]
 					  ,[Severity]
 					  ,[Message]
 				  FROM [Staging].[FileRules]
+				UNION 
+				 -- Rules only in ModifiedRules
+				  SELECT MR.[Rulename]
+					  ,MR.[Severity] as [Severity]
+					  ,MR.[Message] as [Message]	  
+				  FROM [Staging].[ModifiedRules] MR 
+				  LEFT JOIN [Staging].[Rules] R
+					  ON MR.[Rulename] = R.[Rulename]
+				  WHERE R.[Rulename] IS NULL
+				-- Modified Rules
 				UNION 
 				  SELECT TOP (1000) R.[Rulename]
 					  ,ISNULL(MR.[Severity],R.[Severity]) as [Severity]
@@ -23,7 +34,6 @@ BEGIN
 				  FROM [Staging].[Rules] R
 				  LEFT JOIN [Staging].[ModifiedRules] MR
 				  ON MR.[Rulename] = R.[Rulename]
-				) as RecordSetToProcess
 			  )
 			  AS Source ([Rulename],[Severity],[Message])
 		    ON Target.[Rulename] = Source.[Rulename]
