@@ -38,6 +38,9 @@ BEGIN
 		  ,('LearnDelFAMDateTo_03',NULL,'Date applies to'' is wrong: The date that the ''funding and monitoring'' applies to must be on or before the actual end date of the learning. Check ''date applies to'' and ''learning actual end date'' are correct.')
 		  ,('CompStatus_03',NULL,'Learning actual end date'' is missing: You''ve indicated that the learner has completed their learning aim but haven''t provided a ''learning actual end date''. Check ''learning actual end date'' and ''completion status'' are complete and correct.')
 
+		  ,('LearnAimRef_88','E','The Learning aim reference is not valid in the LARS database for this Funding model and this Learning start date')
+		  ,('LearnAimRef_89','E','The Learning aim reference is not valid in the LARS database for this Funding model for this teaching year')
+
 	DECLARE @SummaryOfChanges_ModifiedRules TABLE ([Rulename]  NVARCHAR(50) NOT NULL, [Action] VARCHAR(100) NOT NULL);
 
 	MERGE INTO [Staging].[ModifiedRules] AS Target
