@@ -34,7 +34,8 @@ BEGIN
 				  FROM [Staging].[Rules] R
 				  LEFT JOIN [Staging].[ModifiedRules] MR
 				  ON MR.[Rulename] = R.[Rulename]
-			  )
+			  ) as RecordSetToProcess
+			)
 			  AS Source ([Rulename],[Severity],[Message])
 		    ON Target.[Rulename] = Source.[Rulename]
 			WHEN MATCHED 
