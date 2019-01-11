@@ -74,7 +74,7 @@ BEGIN
 					,Source.[Message]
 				  )
 		WHEN NOT MATCHED BY SOURCE THEN DELETE
-		OUTPUT Inserted.[Rulename],$action INTO @SummaryOfChanges_ModifiedRules([Rulename],[Action])
+		OUTPUT ISNULL(Deleted.[Rulename],Inserted.[Rulename]),$action INTO @SummaryOfChanges_ModifiedRules([Rulename],[Action])
 	    ;
 
 		DECLARE @AddCount_MR INT, @UpdateCount_MR INT, @DeleteCount_MR INT;
