@@ -37,8 +37,9 @@ BEGIN
 		  ,('LearnDelFAMDateTo_03',NULL,'''Date applies to'' is wrong: The date that the ''funding and monitoring'' applies to must be on or before the actual end date of the learning. Check ''date applies to'' and ''learning actual end date'' are correct.')
 		  ,('CompStatus_03',NULL,'''Learning actual end date'' is missing: You''ve indicated that the learner has completed their learning aim but haven''t provided a ''learning actual end date''. Check ''learning actual end date'' and ''completion status'' are complete and correct.')
 	      ,('R112',NULL,'''Date applies to'' is wrong: The apprenticeship contract ''date applies to'' (''learning delivery funding and monitoring'' entry for the ''apprenticeship contract type'' ''date applies to'') should be the same as when the learning finishes (''learning actual end date''). Check learning delivery funding and monitoring for type ''ACT'' ''date applies to'' and ''learning actual end date'' are correct.')		 
-		  ,('R119','E','The apprenticeship financial record cannot be before the Learning start date when the total negotiated price has been returned')
-		 
+		  ,('R119','E','The apprenticeship financial record cannot be before the Learning start date when the total negotiated price has been returned')		 
+		  ,('EmpStat_19',NULL,'The learner must not be employed for more than 16 hours per week at the start of the programme')
+
 		  ,('LearnAimRef_88','E','The Learning aim reference is not valid in the LARS database for this Funding model and this Learning start date')
 		  ,('LearnAimRef_89','E','The Learning aim reference is not valid in the LARS database for this Funding model for this teaching year')
 
