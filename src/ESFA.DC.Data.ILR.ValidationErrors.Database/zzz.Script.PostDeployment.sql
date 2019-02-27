@@ -68,7 +68,8 @@ ALTER USER [ILR1819ValidationErrors_RW_User] WITH PASSWORD = N'$(RWUserPassword)
 
 GO
 
-
+RAISERROR('		Process Records',10,1) WITH NOWAIT;
+EXEC [Staging].[usp_Process]
 GO
 RAISERROR('Completed',10,1) WITH NOWAIT;
 GO
